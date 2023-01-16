@@ -24,7 +24,34 @@ namespace JavaVersionManager
 
         private void button1_Click(object sender, EventArgs e)
         {
+            Form form = new settingsForm();
+            form.Show();
+            this.Hide();
+        }
 
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click_2(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BugReportLink_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/Jachou-yt/JavaVersionManager/issues");
         }
     }
 }
