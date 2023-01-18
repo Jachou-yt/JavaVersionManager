@@ -32,13 +32,13 @@
             this.parameters = new System.Windows.Forms.Button();
             this.title = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.BugReportLink = new System.Windows.Forms.LinkLabel();
+            this.reportBug = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // parameters
             // 
             this.parameters.BackColor = System.Drawing.Color.Transparent;
-            this.parameters.Location = new System.Drawing.Point(108, 874);
+            this.parameters.Location = new System.Drawing.Point(119, 874);
             this.parameters.Name = "parameters";
             this.parameters.Size = new System.Drawing.Size(131, 36);
             this.parameters.TabIndex = 0;
@@ -71,23 +71,15 @@
             this.label1.Text = "No design yet.";
             this.label1.Click += new System.EventHandler(this.label1_Click_2);
             // 
-            // BugReportLink
+            // reportBug
             // 
-            this.BugReportLink.ActiveLinkColor = System.Drawing.Color.GreenYellow;
-            this.BugReportLink.AutoSize = true;
-            this.BugReportLink.BackColor = System.Drawing.Color.White;
-            this.BugReportLink.Cursor = System.Windows.Forms.Cursors.Help;
-            this.BugReportLink.Font = new System.Drawing.Font("Noto Naskh Arabic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BugReportLink.LinkColor = System.Drawing.SystemColors.ActiveCaption;
-            this.BugReportLink.Location = new System.Drawing.Point(13, 891);
-            this.BugReportLink.Name = "BugReportLink";
-            this.BugReportLink.Size = new System.Drawing.Size(78, 19);
-            this.BugReportLink.TabIndex = 4;
-            this.BugReportLink.TabStop = true;
-            this.BugReportLink.Text = "Report a bug";
-            this.BugReportLink.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.BugReportLink.VisitedLinkColor = System.Drawing.Color.DodgerBlue;
-            this.BugReportLink.Click += new System.EventHandler(this.BugReportLink_Click);
+            this.reportBug.Location = new System.Drawing.Point(11, 874);
+            this.reportBug.Name = "reportBug";
+            this.reportBug.Size = new System.Drawing.Size(102, 36);
+            this.reportBug.TabIndex = 4;
+            this.reportBug.Text = "Report Bug";
+            this.reportBug.UseVisualStyleBackColor = true;
+            this.reportBug.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // Form1
             // 
@@ -96,7 +88,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(1709, 919);
-            this.Controls.Add(this.BugReportLink);
+            this.Controls.Add(this.reportBug);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.title);
             this.Controls.Add(this.parameters);
@@ -104,6 +96,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "JavaVersionManager";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -115,7 +108,7 @@
         private System.Windows.Forms.Button parameters;
         private System.Windows.Forms.Label title;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.LinkLabel BugReportLink;
+        private System.Windows.Forms.Button reportBug;
     }
 }
 

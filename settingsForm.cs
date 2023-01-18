@@ -22,5 +22,10 @@ namespace JavaVersionManager
             Form form = new Form1();
             form.Show();
         }
+
+        private void richTextBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
