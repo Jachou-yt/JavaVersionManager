@@ -1,9 +1,11 @@
 import fr.jachou.jvm.managers.JavaVersionManager;
 import fr.jachou.jvm.managers.utils.JavaVersionList;
 
+import java.nio.file.Paths;
+
 public class Test {
     public static void main(String[] args) {
         JavaVersionManager javaVersionManager = new JavaVersionManager();
-        javaVersionManager.downloadVersion(JavaVersionList.Java_8, "C:\\Users\\matis\\IdeaProjects\\JavaVersionManager\\src\\test\\resources");
+        javaVersionManager.unzipJavaVersion(Paths.get("C:\\Users\\matis\\IdeaProjects\\JavaVersionManager\\src\\test\\resources\\"), JavaVersionList.Java_8);
     }
 }

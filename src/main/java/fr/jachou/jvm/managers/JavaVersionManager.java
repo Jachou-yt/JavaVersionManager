@@ -65,14 +65,14 @@ public class JavaVersionManager {
         this.list = version;
         try {
             URL url = new URL(this.downloadURL + version + ".zip");
-            Path downloadPath = Paths.get(version + ".zip");
+            Path downloadPath = this.path.resolve(version + ".zip");
             Files.copy(url.openStream(), downloadPath);
 
 
             Main.getLogger().info("Downloaded " + version + " to " + path + " successfully!");
         } catch (IOException e) {
+            e.getMessage();
             Main.getLogger().err("Failed to download " + version + " to " + path + "!");
-            e.printStackTrace();
         }
     }
 
@@ -104,8 +104,10 @@ public class JavaVersionManager {
 
     public void unzipJavaVersion(Path path, JavaVersionList list) {
         try {
-            ZipUtils.unzip(path, Paths.get(path + list.toString() +".zip"));
+            Main.getLogger().info(list.toString());
+            ZipUtils.unzip(path, Paths.get(path + "\\" + list.toString() +".zip"));
         } catch (IOException e) {
+            e.printStackTrace();
             Main.getLogger().err("Failed to unzip java version " + list + "!");
         }
     }
