@@ -3,19 +3,29 @@ A simple tool to manage multiple Java versions.
 <br>
 Available for Windows, Linux and Mac.
 <br>
-Download the latest release [here](https://)
+Download the latest release [here](https://github.com/Jachou-yt/JavaVersionManager/releases/)
 
 # How to use it
 ## Executable Version
-1. Download the latest release from [here](https://)
+1. Download the latest release from [here](https://github.com/Jachou-yt/JavaVersionManager/releases/)
 2. Open the file
 3. Follow the instructions
 4. Enjoy!
 ## API Version
-1. Download the latest release from [here](https://)
+### Download manually
+1. Download the latest release from [here](https://github.com/Jachou-yt/JavaVersionManager/releases/)
 2. Add the file to your project
 3. Read the documentation
 4. Enjoy!
+### Maven/Gradle method
+```xml
+<dependency>
+  <groupId>fr.jachou</groupId>
+  <artifactId>javaversionmanager</artifactId>
+  <version>0.0.1</version>
+</dependency>
+```
+See more infomartions [here](https://github.com/Jachou-yt/JavaVersionManager/packages)
 
 # Example
 
