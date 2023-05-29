@@ -22,7 +22,7 @@ Download the latest release [here](https://github.com/Jachou-yt/JavaVersionManag
 <dependency>
   <groupId>fr.jachou</groupId>
   <artifactId>javaversionmanager</artifactId>
-  <version>0.0.1</version>
+  <version>VERSION</version>
 </dependency>
 ```
 See more infomartions [here](https://github.com/Jachou-yt/JavaVersionManager/packages)
