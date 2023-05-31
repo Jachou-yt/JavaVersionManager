@@ -1,10 +1,9 @@
 package fr.jachou.jvm.managers;
 
 import fr.flowarg.flowzipper.ZipUtils;
-import fr.jachou.jvm.Main;
+import fr.jachou.jvm.Logger;
 import fr.jachou.jvm.managers.utils.JavaVersionList;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
@@ -48,9 +47,9 @@ public class JavaVersionManager {
             Path downloadPath = Paths.get(version + ".zip");
             Files.copy(url.openStream(), downloadPath);
 
-            Main.getLogger().info("Downloaded " + version + " to " + path.toAbsolutePath().toString() + " successfully!");
+            Logger.getLogger().info("Downloaded " + version + " to " + path.toAbsolutePath().toString() + " successfully!");
         } catch (IOException e) {
-            Main.getLogger().err("Failed to download " + version + " to " + path.toAbsolutePath().toString() + "!");
+            Logger.getLogger().err("Failed to download " + version + " to " + path.toAbsolutePath().toString() + "!");
         }
     }
 
@@ -69,10 +68,10 @@ public class JavaVersionManager {
             Files.copy(url.openStream(), downloadPath);
 
 
-            Main.getLogger().info("Downloaded " + version + " to " + path + " successfully!");
+            Logger.getLogger().info("Downloaded " + version + " to " + path + " successfully!");
         } catch (IOException e) {
             e.getMessage();
-            Main.getLogger().err("Failed to download " + version + " to " + path + "!");
+            Logger.getLogger().err("Failed to download " + version + " to " + path + "!");
         }
     }
 
@@ -82,17 +81,17 @@ public class JavaVersionManager {
 
     public void unzipJavaVersion() {
         if (this.path == null) {
-            Main.getLogger().err("Failed to unzip java version because the path is null!");
+            Logger.getLogger().err("Failed to unzip java version because the path is null!");
             return;
         }
         if (this.list == null) {
-            Main.getLogger().err("Failed to unzip java version because the list is null!");
+            Logger.getLogger().err("Failed to unzip java version because the list is null!");
             return;
         }
         try {
             ZipUtils.unzip(this.path, Paths.get(this.path + this.list.toString() +".zip"));
         } catch (IOException e) {
-            Main.getLogger().err("Failed to unzip java version " + this.list + "!");
+            Logger.getLogger().err("Failed to unzip java version " + this.list + "!");
         }
     }
 
@@ -104,11 +103,11 @@ public class JavaVersionManager {
 
     public void unzipJavaVersion(Path path, JavaVersionList list) {
         try {
-            Main.getLogger().info(list.toString());
+            Logger.getLogger().info(list.toString());
             ZipUtils.unzip(path, Paths.get(path + "\\" + list.toString() +".zip"));
         } catch (IOException e) {
             e.printStackTrace();
-            Main.getLogger().err("Failed to unzip java version " + list + "!");
+            Logger.getLogger().err("Failed to unzip java version " + list + "!");
         }
     }
 
