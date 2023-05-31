@@ -1,13 +1,4 @@
-<img src="https://img.shields.io/github/repo-size/Jachou-yt/JavaVersionManager" alt="">
-<img src="https://img.shields.io/github/downloads/Jachou-yt/JavaVersionManager/total" alt="Downloads">
-<img src="https://img.shields.io/github/issues/Jachou-yt/JavaVersionManager" alt="">
-<img src="https://img.shields.io/github/sponsors/Jachou-yt" alt="">
-<img src="https://img.shields.io/github/license/Jachou-yt/JavaVersionManager" alt="">
-<img src="https://img.shields.io/github/v/release/Jachou-yt/JavaVersionManager" alt="">
-<img src="https://img.shields.io/github/last-commit/Jachou-yt/JavaVersionManager" alt="">
-<img src="https://img.shields.io/github/contributors/Jachou-yt/JavaVersionManager" alt="">
-<img src="https://img.shields.io/github/languages/code-size/Jachou-yt/JavaVersionManager" alt="">
-<img src="https://img.shields.io/github/languages/top/Jachou-yt/JavaVersionManager" alt="">
+<img src="https://img.shields.io/github/repo-size/Jachou-yt/JavaVersionManager" alt=""> <img src="https://img.shields.io/github/downloads/Jachou-yt/JavaVersionManager/total" alt="Downloads"> <img src="https://img.shields.io/github/issues/Jachou-yt/JavaVersionManager" alt=""> <img src="https://img.shields.io/github/sponsors/Jachou-yt" alt=""><img src="https://img.shields.io/github/license/Jachou-yt/JavaVersionManager" alt=""> <img src="https://img.shields.io/github/v/release/Jachou-yt/JavaVersionManager" alt=""> <img src="https://img.shields.io/github/last-commit/Jachou-yt/JavaVersionManager" alt=""><img src="https://img.shields.io/github/contributors/Jachou-yt/JavaVersionManager" alt=""> <img src="https://img.shields.io/github/languages/code-size/Jachou-yt/JavaVersionManager" alt=""> <img src="https://img.shields.io/github/languages/top/Jachou-yt/JavaVersionManager" alt="">
 
 # JavaVersionManager
 JavaVersionManager is a Java library that allows you to download Java version and manage it. It is available in API and executable version.
