@@ -5,6 +5,13 @@ Available for Windows, Linux and Mac.
 <br>
 Download the latest release [here](https://github.com/Jachou-yt/JavaVersionManager/releases/)
 
+# Features branch
+- [x] Download Java version
+- [x] Unzip Java version
+- [ ] Delete Java version
+- [ ] Get Java version list
+- [ ] Get Java version list from a specific version
+
 # How to use it
 ## Executable Version
 1. Download the latest release from [here](https://github.com/Jachou-yt/JavaVersionManager/releases/)
