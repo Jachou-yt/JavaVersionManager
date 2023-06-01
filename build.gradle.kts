@@ -29,7 +29,7 @@ tasks.withType(Jar::class) {
 }
 
 group = "fr.jachou"
-version = "0.0.3"
+version = "0.1.0"
 
 repositories {
     mavenCentral()
