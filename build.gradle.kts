@@ -21,8 +21,15 @@ publishing {
     }
 }
 
+tasks.withType(Jar::class) {
+    manifest {
+        attributes["Manifest-Version"] = "1.0"
+        attributes["Main-Class"] = "fr.jachou.jvm.JavaVersionDownloader"
+    }
+}
+
 group = "fr.jachou"
-version = "0.0.2"
+version = "0.0.3"
 
 repositories {
     mavenCentral()
