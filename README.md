@@ -3,7 +3,7 @@
 # JavaVersionManager
 JavaVersionManager is a Java library that allows you to download Java version and manage it. It is available in API and executable version.
 <br>
-*Warning: This library is still in development, so it is not yet stable.*
+*Warning: This library is still in development, so it is not yet stable. See the branch [Features]("https://github.com/Jachou-yt/JavaVersionManager/tree/features") for the updates*
 
 # JavaDoc
 You can see javadoc [here](https://jvm.chiss.fr/) !
