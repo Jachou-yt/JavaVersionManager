@@ -5,6 +5,7 @@ import fr.jachou.jvm.managers.utils.DownloadURL;
 import fr.jachou.jvm.utils.Logger;
 import fr.jachou.jvm.managers.utils.JavaVersionList;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
@@ -16,6 +17,7 @@ public class JavaVersionManager {
     private String downloadURL;
     private JavaVersionList list;
     private Path path;
+    private Path jarPath;
     private DownloadURL downloadURLList;
 
     public JavaVersionManager(JavaVersionManagerBuilder builder) {
@@ -124,9 +126,31 @@ public class JavaVersionManager {
             Logger.log("Unzipping java version " + this.list + "...");
             ZipUtils.unzip(this.path, Paths.get(this.path + "\\" + this.list.toString() + ".zip"));
             Logger.logPass("Unzipped java version " + this.list + " successfully!");
+
+            Logger.log("Deleting " + this.list + ".zip...");
+            Files.delete(Paths.get(this.path + "\\" + this.list.toString() + ".zip"));
+            Logger.logPass("Deleted " + this.list + ".zip successfully!");
+
+            Logger.log("Set the path of the java version to " + this.path + "\\" + this.list.toString() + "\\bin\\java.exe");
+            this.jarPath = Paths.get(this.path + "\\" + this.list.toString() + "\\bin\\java.exe");
+            Logger.logPass("Set the path of the java version to " + this.path + "\\" + this.list.toString() + "\\bin\\java.exe successfully!");
         } catch (IOException e) {
             Logger.logError("Failed to unzip java version " + this.list + "!", e);
         }
+    }
+
+    public void deleteVersion() {
+        if (this.path == null) {
+            Logger.logError("Failed to delete java version because the path is null!");
+            return;
+        }
+        if (this.list == null) {
+            Logger.logError("Failed to delete java version because the list is null!");
+            return;
+        }
+        Logger.log("Deleting java version " + this.list + "...");
+        deleteFolder(Paths.get(this.path + "\\" + this.list.toString()));
+        Logger.logPass("Deleted java version " + this.list + " successfully!");
     }
 
     /**
@@ -144,6 +168,15 @@ public class JavaVersionManager {
     public JavaVersionList getList() {
         return list;
     }
+
+    /**
+     * @return The path where the java version will be downloaded
+     */
+
+    public Path getPathOfJarExe() {
+        return jarPath;
+    }
+
 
     /*
     ----------------------------------------
@@ -165,6 +198,17 @@ public class JavaVersionManager {
             Logger.logPass("Downloaded " + list + " to " + path.toAbsolutePath().toString() + " successfully!");
         } catch (IOException e) {
             Logger.logError("Failed to download " + list + " to " + path.toAbsolutePath().toString() + "!", e);
+        }
+    }
+
+    private static void deleteFolder(Path folder) {
+        try {
+            Files.walk(folder)
+                    .sorted(java.util.Comparator.reverseOrder())
+                    .map(Path::toFile)
+                    .forEach(File::delete);
+        } catch (IOException e) {
+            Logger.logError("Failed to delete " + folder.toAbsolutePath().toString() + "!", e);
         }
     }
 

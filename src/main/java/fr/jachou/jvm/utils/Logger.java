@@ -18,6 +18,15 @@ public class Logger {
     }
 
     /**
+     * Log a warning
+     * @param message The message
+     */
+
+    public static void logWarning(String message) {
+            System.out.println(PREFIX + Colors.WARNING + message + Colors.RESET);
+    }
+
+    /**
      * Log a pass
      * @param message The message
      */
