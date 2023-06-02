@@ -14,11 +14,6 @@ publishing {
             }
         }
     }
-    publications {
-        create<MavenPublication>("maven") {
-            from(components["java"])
-        }
-    }
 }
 
 tasks.withType(Jar::class) {
