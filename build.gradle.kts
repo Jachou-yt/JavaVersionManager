@@ -1,6 +1,8 @@
 plugins {
     id("java")
+    id("java-library")
     id("maven-publish")
+    id("idea")
 }
 
 publishing {
@@ -20,6 +22,7 @@ publishing {
         }
     }
 }
+
 
 group = "fr.jachou"
 version = "0.1.0"
