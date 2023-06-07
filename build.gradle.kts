@@ -1,3 +1,5 @@
+import sun.tools.jar.resources.jar
+
 plugins {
     id("java")
     id("java-library")
@@ -23,9 +25,15 @@ publishing {
     }
 }
 
+tasks.jar {
+    manifest {
+        attributes["Main-Class"] = "fr.jachou.jvm.JavaVersionDownloader"
+    }
+}
+
 
 group = "fr.jachou"
-version = "0.1.1"
+version = "0.1.2"
 
 repositories {
     mavenCentral()

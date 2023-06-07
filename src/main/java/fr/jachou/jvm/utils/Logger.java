@@ -2,7 +2,7 @@ package fr.jachou.jvm.utils;
 
 public class Logger {
 
-    private static final String PREFIX = "[JVM]";
+    private static final String PREFIX = "[JVM] ";
 
     static class Colors {
         public static final String HEADER = "\033[95m";

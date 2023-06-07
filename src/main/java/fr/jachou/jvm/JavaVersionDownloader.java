@@ -1,12 +1,18 @@
 package fr.jachou.jvm;
 
-import java.io.File;
-import java.io.IOException;
+import fr.jachou.jvm.managers.utils.JavaVersionList;
+import fr.jachou.jvm.ui.JVMGui;
+import fr.jachou.jvm.utils.CustomOutputStream;
+import fr.jachou.jvm.utils.Logger;
+
+import javax.swing.*;
+import java.io.*;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Objects;
 import java.util.Scanner;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -18,7 +24,7 @@ public class JavaVersionDownloader {
      * Colors class
      * This class is used to color the text in the console
      */
-    static class Colors {
+    public static class Colors {
         public static final String HEADER = "\033[95m";
         public static final String OKBLUE = "\033[94m";
         public static final String OKCYAN = "\033[96m";
@@ -36,29 +42,62 @@ public class JavaVersionDownloader {
      */
 
     public static void main(String[] args) {
-        boolean loop = true;
 
-        while (loop) {
-            Scanner scanner = new Scanner(System.in);
+        if (args != null) {
+            if (Objects.equals(args[0], "-p") || Objects.equals(args[0], "--python")) {
+                Logger.log("Python mod enabled!");
 
-            // Message JVM = JavaVersionManager
-            System.out.println(Colors.HEADER + " \n"
-                    + "____________    ________  ___\n"
-                    + "______  /__ |  / /___   |/  /\n"
-                    + "___ _  / __ | / / __  /|_/ /\n"
-                    + "/ /_/ /  __ |/ /  _  /  / / \n"
-                    + "\\____/   _____/   /_/  /_/  \n"
-                    + "                              \n");
+                String pythonFile = "src/main/java/fr/jachou/jvm/py/java_dl.py";
 
-            try {
-                System.out.print(Colors.OKCYAN + "Choose your version (only number) : ");
-                int version = Integer.parseInt(scanner.nextLine());
-                downloader(version);
-            } catch (NumberFormatException e) {
-                System.out.println(Colors.FAIL + "You must enter an integer!");
+                try {
+                    Runtime runtime = Runtime.getRuntime();
+                    Process process = runtime.exec("python " + pythonFile);
+
+                    // Lire la sortie du processus Python
+                    InputStream inputStream = process.getInputStream();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        System.out.println(line);
+                    }
+
+                    // Attendre que le processus Python se termine
+                    int exitCode = process.waitFor();
+                    System.out.println("Le processus Python s'est terminé avec le code de sortie : " + exitCode);
+                } catch (IOException | InterruptedException e) {
+                    e.printStackTrace();
+                }
+            } else if (Objects.equals(args[0], "-g") || Objects.equals(args[0], "--gui")) {
+                Logger.log("GUI mod enabled!");
+
+                new JVMGui();
             }
+        } else {
+            boolean loop = true;
 
-            System.out.println();
+            while (loop) {
+                // Message JVM = JavaVersionManager
+                System.out.println(Colors.HEADER + " \n"
+                        + "____________    ________  ___\n"
+                        + "______  /__ |  / /___   |/  /\n"
+                        + "___ _  / __ | / / __  /|_/ /\n"
+                        + "/ /_/ /  __ |/ /  _  /  / / \n"
+                        + "\\____/   _____/   /_/  /_/  \n"
+                        + "                              \n");
+
+                try {
+                    System.out.print(Colors.OKCYAN + "Choose your version (only number) : ");
+                    Scanner scanner = new Scanner(System.in);
+                    int version = Integer.parseInt(scanner.nextLine());
+                    if (version == 0) {
+                        Logger.log("Exiting...");
+                        System.exit(0);
+                    }
+                    downloader(version);
+                } catch (NumberFormatException e) {
+                    System.out.println(Colors.FAIL + "You must enter an integer!");
+                }
+            }
         }
     }
 
@@ -68,6 +107,16 @@ public class JavaVersionDownloader {
      */
 
     private static void downloader(int version) {
+        try {
+            String versionString = "Java_" + version;
+            JavaVersionList.valueOf(versionString);
+        } catch (IllegalArgumentException e) {
+            System.out.println(Colors.FAIL + "[X] The version " + version + " does not exist!");
+            return;
+        }
+
+        Logger.logPass("The version " + version + " exists!");
+
         System.out.print(Colors.BOLD + "[~] Checking if the link is good...");
         String url = String.format("https://chiss.fr/jvm/download/Java_%d.zip", version);
         try {
@@ -103,6 +152,7 @@ public class JavaVersionDownloader {
             Thread.sleep(1000);
         } catch (IOException e) {
             System.out.println(Colors.FAIL + "[X] The link does not exist!");
+            e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
