@@ -102,6 +102,41 @@ public class JavaManager {
     }
 
     /**
+     * Delete Java
+     */
+
+    public void deleteJava(Path java) {
+        File file = new File(String.valueOf(java));
+        if (!file.exists()) {
+            Logger.logWarning("The Java folder does not exist");
+            return;
+        }
+        if (!file.isDirectory()) {
+            Logger.logWarning("The Java folder is not a directory");
+            return;
+        }
+        Logger.log("Deleting Java folder...");
+        file.delete();
+        Logger.logPass("The Java folder has been deleted successfully");
+     }
+
+    /**
+     * Delete Java
+     */
+
+    public void deleteJava() {
+        if (useJavaVersionManager) {
+            Logger.log("Deleting Java folder...");
+            File file = new File(String.valueOf(javaVersionManager.getPathOfJarExe()));
+            file.delete();
+            Logger.logPass("The Java folder has been deleted successfully");
+        } else {
+            Logger.logWarning("Java version manager is not enabled. Please sepcify the Java version manager in the constructor or specify a path to the java folder");
+        }
+    }
+
+
+    /**
      * Executes dynamically provided Java code.
      * @param code The Java code to execute
      * @return The output of the code execution

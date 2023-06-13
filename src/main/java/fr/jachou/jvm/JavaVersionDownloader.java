@@ -8,6 +8,7 @@ import fr.jachou.jvm.utils.Logger;
 import javax.swing.*;
 import java.io.*;
 import java.net.URL;
+import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -106,7 +107,7 @@ public class JavaVersionDownloader {
      * @param version The version of java to unzip
      */
 
-    private static void downloader(int version) {
+    public static void downloader(int version) {
         try {
             String versionString = "Java_" + version;
             JavaVersionList.valueOf(versionString);
@@ -117,38 +118,38 @@ public class JavaVersionDownloader {
 
         Logger.logPass("The version " + version + " exists!");
 
-        System.out.print(Colors.BOLD + "[~] Checking if the link is good...");
+        Logger.logWarning( "[~] Checking if the link is good...");
         String url = String.format("https://chiss.fr/jvm/download/Java_%d.zip", version);
         try {
             URL link = new URL(url);
             link.openStream().close();
-            System.out.println(Colors.OKGREEN + "[✓] The link is good!");
+            Logger.logPass("[✓] The link is good!");
             Thread.sleep(1000);
             String path = System.getProperty("user.home") + "/.jdks";
             System.out.println(Colors.OKCYAN + "The JDK " + version + " will be downloaded in the folder '" + path + "'");
             File directory = new File(path);
             if (!directory.exists()) {
                 if (directory.mkdirs()) {
-                    System.out.println(Colors.OKGREEN + "[✓] The folder has been created!");
+                    Logger.logPass("[✓] The folder has been created!");
                 }
             } else {
                 System.out.println(Colors.WARNING + "[~] The folder already exists");
             }
             Thread.sleep(1000);
-            System.out.print(Colors.BOLD + "[~] Downloading...");
+            Logger.logWarning( "[~] Downloading...");
             Path destination = Paths.get(path + "/Java_" + version + ".zip");
             Files.copy(link.openStream(), destination, StandardCopyOption.REPLACE_EXISTING);
-            System.out.println(Colors.OKGREEN + "[✓] The JDK " + version + " has been downloaded!");
+            Logger.logPass("[✓] The JDK " + version + " has been downloaded!");
             Thread.sleep(1000);
-            System.out.print(Colors.BOLD + "[~] Unzipping...");
+            Logger.logWarning( "[~] Unzipping...");
             unzip(destination.toString(), path + "/Java_" + version);
-            System.out.println(Colors.OKGREEN + "[✓] The JDK " + version + " has been unzipped!");
+            Logger.logPass("[✓] The JDK " + version + " has been unzipped!");
             Thread.sleep(1000);
-            System.out.print(Colors.BOLD + "[~] Deleting zip file...");
+            Logger.logWarning( "[~] Deleting zip file...");
             Files.delete(destination);
-            System.out.println(Colors.OKGREEN + "[✓] The JDK " + version + " has been deleted!");
+            Logger.logPass("[✓] The JDK " + version + " has been deleted!");
             Thread.sleep(1000);
-            System.out.println(Colors.OKGREEN + "[✓] The JDK " + version + " has been downloaded and installed!");
+            Logger.logPass("[✓] The JDK " + version + " has been downloaded and installed!");
             Thread.sleep(1000);
         } catch (IOException e) {
             System.out.println(Colors.FAIL + "[X] The link does not exist!");
@@ -157,6 +158,76 @@ public class JavaVersionDownloader {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Unzip a file
+     * @param version The version of java to unzip
+     * @param progressBar The progress bar
+     */
+
+    public static void downloaderWithProgressBar(int version, JProgressBar progressBar) {
+        progressBar.setMaximum(100);
+        try {
+            String versionString = "Java_" + version;
+            JavaVersionList.valueOf(versionString);
+        } catch (IllegalArgumentException e) {
+            System.out.println(Colors.FAIL + "[X] The version " + version + " does not exist!");
+            return;
+        }
+
+        Logger.logPass("The version " + version + " exists!");
+
+        progressBar.setValue(0);
+
+        Logger.logWarning( "[~] Checking if the link is good...");
+        String url = String.format("https://chiss.fr/jvm/download/Java_%d.zip", version);
+        try {
+            URL link = new URL(url);
+            link.openStream().close();
+            Logger.logPass("[✓] The link is good!");
+            progressBar.setValue(10);
+            Thread.sleep(1000);
+            String path = System.getProperty("user.home") + "/.jdks";
+            System.out.println(Colors.OKCYAN + "The JDK " + version + " will be downloaded in the folder '" + path + "'");
+            File directory = new File(path);
+            if (!directory.exists()) {
+                if (directory.mkdirs()) {
+                    Logger.logPass("[✓] The folder has been created!");
+                }
+            } else {
+                System.out.println(Colors.WARNING + "[~] The folder already exists");
+            }
+            progressBar.setValue(20);
+            Thread.sleep(1000);
+            Logger.logWarning( "[~] Downloading...");
+            Path destination = Paths.get(path + "/Java_" + version + ".zip");
+            Files.copy(link.openStream(), destination, StandardCopyOption.REPLACE_EXISTING);
+            progressBar.setValue(30);
+            Logger.logPass("[✓] The JDK " + version + " has been downloaded!");
+            progressBar.setValue(50);
+            Thread.sleep(1000);
+            Logger.logWarning( "[~] Unzipping...");
+            progressBar.setValue(60);
+            unzip(destination.toString(), path + "/Java_" + version);
+            Logger.logPass("[✓] The JDK " + version + " has been unzipped!");
+            progressBar.setValue(80);
+            Thread.sleep(1000);
+            Logger.logWarning( "[~] Deleting zip file...");
+            progressBar.setValue(90);
+            Files.delete(destination);
+            Logger.logPass("[✓] The JDK " + version + " has been deleted!");
+            Thread.sleep(1000);
+            Logger.logPass("[✓] The JDK " + version + " has been downloaded and installed!");
+            Thread.sleep(1000);
+            progressBar.setValue(100);
+        } catch (IOException e) {
+            System.out.println(Colors.FAIL + "[X] The link does not exist!");
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * Unzip it

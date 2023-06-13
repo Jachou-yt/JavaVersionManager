@@ -24,6 +24,8 @@ public class JVMGui extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new FlowLayout());
 
+        JProgressBar progressBar = new JProgressBar();
+
         JTextField textField = new JTextField("Press a button to download a JDK");
         textField.setEditable(false);
         textField.setPreferredSize(new Dimension(300, 30));
@@ -36,88 +38,19 @@ public class JVMGui extends JFrame {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     // Appeler la méthode downloader avec la version correspondante
-                    downloader(version.ordinal() + 8);
+                    JavaVersionDownloader.downloaderWithProgressBar(version.ordinal() + 8, progressBar);
                 }
             });
             add(button);
         }
 
+
+        progressBar.setPreferredSize(new Dimension(300, 30));
+        progressBar.setStringPainted(true);
+        add(progressBar);
+
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
-    }
-
-    private static void downloader(int version) {
-        try {
-            String versionString = "Java_" + version;
-            JavaVersionList.valueOf(versionString);
-        } catch (IllegalArgumentException e) {
-            System.out.println(JavaVersionDownloader.Colors.FAIL + "[X] The version " + version + " does not exist!");
-            return;
-        }
-
-        Logger.logPass("The version " + version + " exists!");
-
-        System.out.print(JavaVersionDownloader.Colors.BOLD + "[~] Checking if the link is good...");
-        String url = String.format("https://chiss.fr/jvm/download/Java_%d.zip", version);
-        try {
-            URL link = new URL(url);
-            link.openStream().close();
-            System.out.println(JavaVersionDownloader.Colors.OKGREEN + "[✓] The link is good!");
-            Thread.sleep(1000);
-            String path = System.getProperty("user.home") + "/.jdks";
-            System.out.println(JavaVersionDownloader.Colors.OKCYAN + "The JDK " + version + " will be downloaded in the folder '" + path + "'");
-            File directory = new File(path);
-            if (!directory.exists()) {
-                if (directory.mkdirs()) {
-                    System.out.println(JavaVersionDownloader.Colors.OKGREEN + "[✓] The folder has been created!");
-                }
-            } else {
-                System.out.println(JavaVersionDownloader.Colors.WARNING + "[~] The folder already exists");
-            }
-            Thread.sleep(1000);
-            System.out.print(JavaVersionDownloader.Colors.BOLD + "[~] Downloading...");
-            Path destination = Paths.get(path + "/Java_" + version + ".zip");
-            Files.copy(link.openStream(), destination, StandardCopyOption.REPLACE_EXISTING);
-            System.out.println(JavaVersionDownloader.Colors.OKGREEN + "[✓] The JDK " + version + " has been downloaded!");
-            Thread.sleep(1000);
-            System.out.print(JavaVersionDownloader.Colors.BOLD + "[~] Unzipping...");
-            unzip(destination.toString(), path + "/Java_" + version);
-            System.out.println(JavaVersionDownloader.Colors.OKGREEN + "[✓] The JDK " + version + " has been unzipped!");
-            Thread.sleep(1000);
-            System.out.print(JavaVersionDownloader.Colors.BOLD + "[~] Deleting zip file...");
-            Files.delete(destination);
-            System.out.println(JavaVersionDownloader.Colors.OKGREEN + "[✓] The JDK " + version + " has been deleted!");
-            Thread.sleep(1000);
-            System.out.println(JavaVersionDownloader.Colors.OKGREEN + "[✓] The JDK " + version + " has been downloaded and installed!");
-            Thread.sleep(1000);
-        } catch (IOException e) {
-            System.out.println(JavaVersionDownloader.Colors.FAIL + "[X] The link does not exist!");
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static void unzip(String zipFilePath, String destinationDir) throws IOException {
-        File dir = new File(destinationDir);
-        if (!dir.exists()) {
-            dir.mkdirs();
-        }
-        byte[] buffer = new byte[1024];
-        try (ZipInputStream zis = new ZipInputStream(Files.newInputStream(Paths.get(zipFilePath)))) {
-            ZipEntry entry = zis.getNextEntry();
-            while (entry != null) {
-                String fileName = entry.getName();
-                File newFile = new File(destinationDir + File.separator + fileName);
-                if (entry.isDirectory()) {
-                    newFile.mkdirs();
-                } else {
-                    new File(newFile.getParent()).mkdirs();
-                    Files.copy(zis, newFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-                }
-                zis.closeEntry();
-                entry = zis.getNextEntry();
-            }
-        }
     }
 }
